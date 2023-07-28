@@ -11,8 +11,8 @@ public:
         if(dp[i][j]!=-1){
             return dp[i][j];
         }
-      int take_i = nums[i] + min(solve(i+2,j,nums,dp) , solve(i+1,j-1,nums,dp));
-      int take_j = nums[j] + min(solve(i,j-2,nums,dp) , solve(i+1,j-1,nums,dp));
+      int take_i = nums[i] - solve(i+1,j,nums,dp);
+      int take_j = nums[j] - solve(i,j-1,nums,dp);
 
       //here we tried to do our best, and we expected the worst so took min
 
@@ -22,10 +22,10 @@ public:
         int total=accumulate(nums.begin(),nums.end(),0);
         int n=nums.size();
         vector<vector<int>> dp(n+1,vector<int> (n+1,-1));
-        int player1_Score=solve(0,n-1,nums,dp);
-        int player2_Score=total-player1_Score;
+        int diff=solve(0,n-1,nums,dp);
+
         
         
-        return player1_Score>=player2_Score;
+        return diff>=0;
     }
 };
